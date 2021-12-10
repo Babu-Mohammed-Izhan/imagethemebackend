@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import noteRouter from "./routes/note";
+import noteRouter from "./controller/note";
 
 const app = express();
 app.use(cors());
