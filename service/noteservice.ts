@@ -15,7 +15,43 @@ const getOneNote = async (title: string): Promise<Notes> => {
   return note;
 };
 
+const addOneNote = async (note: Notes): Promise<Notes> => {
+  const newNote = await NoteModel.create(note);
+
+  if (!newNote) {
+    throw Error("Note in not available");
+  }
+
+  return newNote;
+};
+
+const updateNote = async (note: Notes): Promise<Notes> => {
+  const updatedNote = await NoteModel.findOneAndUpdate(
+    { title: note.title },
+    note
+  );
+
+  if (!updatedNote) {
+    throw Error("Note in not available");
+  }
+
+  return updatedNote;
+};
+
+const deleteNote = async (note: Notes): Promise<Notes> => {
+  const deletedNote = await NoteModel.findOneAndDelete({ title: note.title });
+
+  if (!deletedNote) {
+    throw Error("Note in not available");
+  }
+
+  return deletedNote;
+};
+
 export default {
   getNotes,
   getOneNote,
+  addOneNote,
+  updateNote,
+  deleteNote,
 };
