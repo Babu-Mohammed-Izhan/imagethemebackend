@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/.env" });
 import express from "express";
 import cors from "cors";
-import noteRouter from "./controller/note";
+import uploadRouter from "./controller/upload";
 import mongoose from "mongoose";
 
 const app = express();
@@ -20,7 +20,7 @@ mongoose
 
 const PORT = 3001;
 
-app.use("/api/note", noteRouter);
+app.use("/api/upload", uploadRouter);
 
 app.get("/api/ping", (_req, res) => {
   res.send("pong");
