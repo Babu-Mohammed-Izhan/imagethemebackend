@@ -1,9 +1,3 @@
-export interface Notes {
-  title: string;
-  body: string;
-  author: string;
-}
-
 export interface Image {
   title: string;
   imgurl: string;
