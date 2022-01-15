@@ -11,7 +11,8 @@ router.get('/', (_req: Request, res: Response) => {
 });
 
 router.post('/', (req: Request, res: Response) => {
-  const imgurl: string = parseString(req.body.url);
+  console.log(req.body);
+  const imgurl: string = parseString(req.body.body.url);
   const apiKey = 'acc_3e5d16f9e4f3006';
   const apiSecret = '498e6d9f842f3eb8669809adffbff38a';
 
