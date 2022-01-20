@@ -1,28 +1,32 @@
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 dotenv.config({ path: __dirname + '/.env' });
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 import uploadRouter from './controller/upload';
 import { createConnection } from 'typeorm';
+import { Image } from './models/imageModel';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const connection = await createConnection({
+createConnection({
   type: 'postgres',
-  url: 'postgres://izhan:izhan@localhost/test',
-});
-
-// mongoose
-//   .connect(`${process.env.MONGO_URL}`)
-//   .then(() => {
-//     console.log('connected to MongoDB database');
-//   })
-//   .catch((err) => {
-//     console.log('error connecting to MongoDB: ', err.message);
-//   });
+  host: process.env.POSTGRES_HOST || 'localhost',
+  port: Number(process.env.POSTGRES_PORT) || 5432,
+  username: process.env.POSTGRES_USER || 'postgres',
+  password: process.env.POSTGRES_PASSWORD || 'izhan',
+  database: process.env.POSTGRES_DB || 'postgres',
+  entities: [Image],
+  synchronize: true,
+})
+  .then((_conn) => {
+    console.log('Database Running');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const PORT = 3001;
 
@@ -35,5 +39,3 @@ app.get('/api/ping', (_req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-export { connection };

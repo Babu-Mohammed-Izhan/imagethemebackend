@@ -1,15 +1,15 @@
-import { connection } from '../index';
 import { Image } from '../models/imageModel';
 import { ImageType } from '../types';
-
-const imageRepository = connection.getRepository(Image);
+import { getRepository } from 'typeorm';
 
 const getImages = async () => {
+  const imageRepository = getRepository(Image);
   const images = await imageRepository.find();
   return images;
 };
 
 const getOneImage = async (title: string) => {
+  const imageRepository = getRepository(Image);
   const image = await imageRepository.findOne({ title: title });
   if (!image) {
     throw Error('Image in not available');
@@ -18,6 +18,7 @@ const getOneImage = async (title: string) => {
 };
 
 const addOneImage = async (image: ImageType) => {
+  const imageRepository = getRepository(Image);
   const imageTemp = new Image();
   imageTemp.title = image.title;
   imageTemp.imgurl = image.imgurl;
@@ -62,6 +63,7 @@ const addOneImage = async (image: ImageType) => {
 // };
 
 const deleteImage = async (image: ImageType) => {
+  const imageRepository = getRepository(Image);
   const imageToRemove = await imageRepository.findOne({ title: image.title });
   if (imageToRemove) {
     await imageRepository.remove(imageToRemove);
