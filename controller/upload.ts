@@ -50,6 +50,7 @@ router.post('/', (req: Request, res: Response) => {
         })
         .then((coloRes) => {
           console.log(coloRes);
+
           res.send(200).send(coloRes);
         })
         .catch((err) => {

@@ -1,58 +1,87 @@
-import { Image } from "../types";
-import ImageModel from "../models/Image.model";
+import { connection } from '../index';
+import { Image } from '../models/imageModel';
+import { ImageType } from '../types';
 
-const getImages = async (): Promise<Image[]> => {
-  const Images = await ImageModel.find({});
-  return Images;
+const imageRepository = connection.getRepository(Image);
+
+const getImages = async () => {
+  const images = await imageRepository.find();
+  return images;
 };
 
-const getOneImage = async (title: string): Promise<Image> => {
-  const Image = await ImageModel.findOne({ title: title });
-  if (!Image) {
-    throw Error("Image in not available");
+const getOneImage = async (title: string) => {
+  const image = await imageRepository.findOne({ title: title });
+  if (!image) {
+    throw Error('Image in not available');
   }
-  return Image;
+  return image;
 };
 
-const addOneImage = async (Image: Image): Promise<Image> => {
-  const newImage = await ImageModel.create(Image);
+const addOneImage = async (image: ImageType) => {
+  const imageTemp = new Image();
+  imageTemp.title = image.title;
+  imageTemp.imgurl = image.imgurl;
+  imageTemp.colorScheme1 = image.colorScheme1;
+  imageTemp.colorScheme2 = image.colorScheme2;
+  imageTemp.colorScheme3 = image.colorScheme3;
+  imageTemp.colorScheme4 = image.colorScheme4;
+  imageTemp.colorScheme5 = image.colorScheme5;
 
-  if (!newImage) {
-    throw Error("Image in not available");
+  await imageRepository.save(imageTemp);
+  console.log('Image has been saved');
+
+  const newimages = await imageRepository.find();
+
+  if (!newimages) {
+    throw Error('Image in not available');
   }
 
-  return newImage;
+  return newimages;
 };
 
-const updateImage = async (image: Image): Promise<Image> => {
-  const updatedImage = await ImageModel.findOneAndUpdate(
-    { title: image.title },
-    image
-  );
+// const updateImage = async (image: ImageType) => {
+//   const imageToUpdate = await imageRepository.findOne({ title: image.title });
+//   imageToUpdate?.title = image.title;
+//   imageToUpdate?.imgurl = image.imgurl;
+//   imageToUpdate?.colorScheme1 = image.colorScheme1;
+//   imageToUpdate?.colorScheme2 = image.colorScheme2;
+//   imageToUpdate?.colorScheme3 = image.colorScheme3;
+//   imageToUpdate?.colorScheme4 = image.colorScheme4;
+//   imageToUpdate?.colorScheme5 = image.colorScheme5;
 
-  if (!updatedImage) {
-    throw Error("Image in not available");
+//   await imageRepository.save(imageToUpdate);
+//   console.log('Image has been updated');
+
+//   const newimages = await imageRepository.find();
+
+//   if (!newimages) {
+//     throw Error('Images in not available');
+//   }
+
+//   return newimages;
+// };
+
+const deleteImage = async (image: ImageType) => {
+  const imageToRemove = await imageRepository.findOne({ title: image.title });
+  if (imageToRemove) {
+    await imageRepository.remove(imageToRemove);
+    console.log('Image has been deleted');
+  } else {
+    throw Error('Image not found');
   }
 
-  return updatedImage;
-};
+  const newimages = await imageRepository.find();
 
-const deleteImage = async (image: Image): Promise<Image> => {
-  const deletedImage = await ImageModel.findOneAndDelete({
-    title: image.title,
-  });
-
-  if (!deletedImage) {
-    throw Error("Image in not available");
+  if (!newimages) {
+    throw Error('Images are not available');
   }
 
-  return deletedImage;
+  return newimages;
 };
 
 export default {
   getImages,
   getOneImage,
   addOneImage,
-  updateImage,
   deleteImage,
 };

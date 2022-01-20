@@ -1,4 +1,4 @@
-export interface Image {
+export interface ImageType {
   title: string;
   imgurl: string;
   colorScheme1: string;

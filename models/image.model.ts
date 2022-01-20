@@ -1,7 +1,7 @@
-import { Image } from "../types";
-import { Schema, model } from "mongoose";
+import { ImageType } from '../types';
+import { Schema, model } from 'mongoose';
 
-const imageSchema = new Schema<Image>({
+const imageSchema = new Schema<ImageType>({
   title: {
     type: String,
     required: true,
@@ -32,6 +32,6 @@ const imageSchema = new Schema<Image>({
   },
 });
 
-const ImageModel = model<Image>("Image", imageSchema);
+const ImageModel = model<ImageType>('Image', imageSchema);
 
 export default ImageModel;
