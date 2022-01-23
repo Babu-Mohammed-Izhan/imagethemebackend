@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 
 const getImages = async () => {
   const imageRepository = getRepository(Image);
-  const images = await imageRepository.find();
+  const images = await imageRepository.find({});
   return images;
 };
 

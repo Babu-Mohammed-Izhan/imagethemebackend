@@ -8,7 +8,14 @@ import imageService from '../service/uploadservice';
 const router = express.Router();
 
 router.get('/', (_req: Request, res: Response) => {
-  res.status(200).send(imageService.getImages());
+  const newimages = imageService.getImages();
+  newimages
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.post('/', (req: Request, res: Response) => {
@@ -48,7 +55,22 @@ router.post('/', (req: Request, res: Response) => {
           'N',
         ],
       });
-      res.json(colormind.data.result);
+
+      if (colormind.status == 200) {
+        const newImages = await imageService.addOneImage({
+          title: req.body.title,
+          imgurl: imgurl,
+          colorScheme1: `rgb(${colormind.data.result[0]})`,
+          colorScheme2: `rgb(${colormind.data.result[1]})`,
+          colorScheme3: `rgb(${colormind.data.result[2]})`,
+          colorScheme4: `rgb(${colormind.data.result[3]})`,
+          colorScheme5: `rgb(${colormind.data.result[4]})`,
+        });
+
+        console.log(newImages);
+
+        res.json(newImages);
+      }
     } catch (error) {
       res.send(Error(error.message));
     }
