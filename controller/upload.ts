@@ -67,8 +67,6 @@ router.post('/', (req: Request, res: Response) => {
           colorScheme5: `rgb(${colormind.data.result[4]})`,
         });
 
-        console.log(newImages);
-
         res.json(newImages);
       }
     } catch (error) {

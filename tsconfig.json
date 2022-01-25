@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "declaration": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "outDir": "dist"
   }
 }
