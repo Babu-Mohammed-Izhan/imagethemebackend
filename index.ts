@@ -20,6 +20,9 @@ createConnection({
   database: process.env.POSTGRES_DB || 'postgres',
   entities: [Image],
   synchronize: true,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 })
   .then((_conn) => {
     console.log('Database Running');
