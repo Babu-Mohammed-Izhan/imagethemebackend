@@ -10,7 +10,7 @@
     "clean": "tsc --build --clean",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --ext .ts .",
-    "start": "npm run postinstall && node dist/index.js"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
