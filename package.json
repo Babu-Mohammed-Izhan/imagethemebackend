@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run tsc",
-    "tsc": "tsc --build",
+    "tsc": "tsc",
     "clean": "tsc --build --clean",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --ext .ts .",
