@@ -28,14 +28,12 @@ createConnection({
     console.log(err);
   });
 
-const PORT = 3001;
-
 app.use('/api/upload', uploadRouter);
 
 app.get('/api/ping', (_req, res) => {
   res.send('pong');
 });
 
-app.listen(process.env.PORT || PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Server running on port ${process.env.PORT || 3001}`);
 });
